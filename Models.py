@@ -1,5 +1,4 @@
-from sre_constants import CATEGORY_UNI_NOT_LINEBREAK
-
+from datetime import datetime
 
 class Categorias:
     def __init__(self, categoria):
@@ -15,6 +14,14 @@ class Estoque:
     def __init__(self, produto: Produtos, quantidade):
         self.produto = produto
         self.quantidade = quantidade
+
+class Venda:
+    def __init__(self, itens_vendidos: Produtos, vendedor, comprador, quantidade_vendida, data = datetime.now()):
+        self.itens_vendidos = itens_vendidos
+        self.vendedor = vendedor
+        self.comprador = comprador
+        self.quantidade_vendida = quantidade_vendida
+        self.data = data
 
 class Fornecedor:
     def __init__(self, nome, cnpj, telefone, categoria):
