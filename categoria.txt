@@ -2,3 +2,4 @@ frios
 verduras
 legumes
 carnes
+frutas

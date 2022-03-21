@@ -64,5 +64,25 @@ class ControllerCategoria:
             for i in categorias:
                 print(f'categorias: {i.categoria}')
 
-#a = ControllerCategoria()
-#a.alterar_categoria('legumes', 'carnes')
+class ControllerEstoque:
+    def cadastrar_produto(self, nome, preco, categoria, quantidade):
+        y = DaoCategoria.ler()
+        cate = list(filter(lambda y: y.categoria == categoria, y))
+        x = DaoEstoque.ler()
+        esto = list(filter(lambda x: x.produto.nome == nome, x))
+        
+        if len(cate) > 0:
+            if len(esto) == 0: 
+                produto = Produtos(nome, preco, categoria)
+                DaoEstoque.salvar(produto, quantidade)
+                print('Produto adicionado ao estoque com sucesso.')
+            else:
+                print('Produto já existente nesse estoque.')
+        else:
+            print('Categoria inexistente.')
+
+
+
+
+a = ControllerEstoque()
+a.cadastrar_produto('banana', '5', 'frutas', 20)
