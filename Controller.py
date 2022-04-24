@@ -203,8 +203,27 @@ class ControllerVenda:
             print(f"produto: {i['produto']}")
             print(f"quantidade: {i['quantidade']}\n")
 
+    def mostra_venda(self, datainicial, datafinal):
+        venda = DaoVenda.ler()
+        datainicial1 = datetime.strptime(datainicial, '%d/%m/%Y')
+        datafinal1 = datetime.strptime(datafinal, '%d/%m/%Y')
+
+        vendasselecionada = list(filter(lambda x: datetime.strptime(x.data, '%d/%m/%Y') >= datainicial1 
+                                        and datetime.strptime(x.data, '%d/%m/%Y') <= datafinal1, venda))
+        total = 0
+        print('==========vendas==========')
+        for i in vendasselecionada:
+            print(f"Nome: {i.itens_vendidos.nome}\n"
+                  f"Categoria: {i.itens_vendidos.categoria}\n"
+                  f"Data: {i.data}\n"
+                  f"quantidade: {i.quantidade_vendida}\n"
+                  f"Cliente: {i.comprador}\n"
+                  f"Vendedor: {i.vendedor}\n")
+            total += int(i.itens_vendidos.preco) * int(i.quantidade_vendida)
+        print(f"total vendido: {total}")
 
 a = ControllerVenda()
-a.relatorio_produtos()
+a.mostra_venda("17/03/2022", "28/03/2022")
+# a.relatorio_produtos()
 # a.cadastrar_venda("banana", 'joao', 'caio', 10)
-#a.alterar_produto('banana', 'maca', '7', 'frutas', '20')
+# a.alterar_produto('banana', 'maca', '7', 'frutas', '20')
