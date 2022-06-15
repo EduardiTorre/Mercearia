@@ -1,3 +1,4 @@
+from sqlalchemy import false
 from Models import *
 from DAO import *
 
@@ -222,8 +223,22 @@ class ControllerVenda:
             total += int(i.itens_vendidos.preco) * int(i.quantidade_vendida)
         print(f"total vendido: {total}")
 
-a = ControllerVenda()
-a.mostra_venda("17/03/2022", "28/03/2022")
-# a.relatorio_produtos()
-# a.cadastrar_venda("banana", 'joao', 'caio', 10)
-# a.alterar_produto('banana', 'maca', '7', 'frutas', '20')
+class ControlleFornecedor:
+    def cadastrar_fornecedor(self, nome, cnpj, telefone, categoria):
+        x = DaoFornecedor.ler()
+        listaCnpj = list(filter(lambda x: x.cnpj == cnpj, x))
+        listaTelefone = list(filter(lambda x: x.cnpj == cnpj, x))
+        if len(listaCnpj) > 0:
+            print("Cnpj já existe.")
+        elif len(listaTelefone) > 0:
+            print("o teleforne já existe")
+        else:
+            if len(cnpj) == 14 and len(telefone) <= 11 and len(telefone) >= 10:
+                DaoFornecedor.salvar(Fornecedor(nome, cnpj, telefone, categoria))
+    
+    def alterar_fornecedor(self, nomealterar, novonome, novocnpj, novotelefone, novacategoria):
+        
+
+
+
+# a = ControllerVenda()
