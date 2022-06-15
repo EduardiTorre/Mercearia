@@ -1,4 +1,4 @@
-from sqlalchemy import false
+from sqlalchemy import PrimaryKeyConstraint
 from Models import *
 from DAO import *
 
@@ -36,6 +36,17 @@ class ControllerCategoria:
 
             print('Categoria removida com sucesso.')
 
+            estoque = DaoEstoque.ler()
+            estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, "Sem categoria"), x.quantidade)
+                      if(x.produto.categoria == removercategoria) else(x), estoque))
+            with open('estoque.txt', 'w') as arq:
+                for i in x:
+                    arq.writelines(i.produto.nome + '|' +
+                                   i.produto.preco + '|' +
+                                   i.produto.categoria + '|' +
+                                   str(i.quantidade))
+                    arq.writelines('\n')
+
     def alterar_categoria(self, antigacategoria, novacategoria):
         x = DaoCategoria.ler()
 
@@ -56,7 +67,7 @@ class ControllerCategoria:
                 arq.writelines(i.categoria)
                 arq.writelines('\n')
 
-    def mostrar_cateforia(self):
+    def mostrar_categoria(self):
         categorias = DaoCategoria.ler()
         
         if len(categorias) == 0:
