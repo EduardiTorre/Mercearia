@@ -258,5 +258,38 @@ class ControlleFornecedor:
                 arq.writelines('\n')
             print("Fornecedor alterado com sucesso.")
         
+    def remover_fornecedor(self, nome):
+        x = DaoFornecedor.ler()
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print("Fornecedor que deseja remover nao existe.")
+            return None
+        
+        with open("fornecedores.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.nome + '|' +
+                               i.cnpj + '|' +
+                               i.telefone + '|' +
+                               str(i.categoria) )
+                arq.writelines('\n')
+            print("Fornecedor removido com sucesso.")
     
+    def mostrar_fornecedores(self):
+        forne = DaoFornecedor.ler()
+        if len(forne) == 0:
+            print("lista de fornecedores vazias.")
+        
+        for i in forne:
+            print(f"=== Fornecedor ===")
+            print(f"Categoria fornecida: {i.categoria}\n"
+                  f"Nome: {i.nome}\n"
+                  f"Telefone: {i.telefone}\n"
+                  f"Cnpj: {i.cnpj}" )
+
+
 # a = ControllerVenda()
