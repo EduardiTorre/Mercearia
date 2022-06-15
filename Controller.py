@@ -305,7 +305,24 @@ class ControllerClientes:
             else: 
                 print('Digite um cpf ou telefone válido.')
         
+    def alterar_cliente(self, nomealterar, novonome, novotelefone, novocpf, novoemail, novoendereco):
+        x = DaoPessoa.ler()
+
+        verif_nome = list(filter(lambda x: x.nome == nomealterar, x))
+        if len(verif_nome) > 0:
+            x = list(map(lambda x: Pessoa(novonome, novotelefone, novocpf, novoemail, novoendereco) if(x.nome == nomealterar) else(x), x))
+        else:
+            print("O cliente alterar não existe.")
+
+        with open("clientes.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.nome + '|' +
+                               i.telefone + '|' +
+                               i.cpf + '|' +
+                               i.email + '|' +
+                               i.endereco)
+                arq.writelines('\n')
+            print("Cliente alterado com sucesso.")
     
-
-
+    
 # a = ControllerVenda()
