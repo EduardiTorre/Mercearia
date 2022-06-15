@@ -56,7 +56,18 @@ class ControllerCategoria:
             cat1 = list(filter(lambda x: x.categoria == novacategoria, x))
             if len(cat1) == 0:
                 x = list(map(lambda x: Categorias(novacategoria) if(x.categoria == antigacategoria) else(x), x))
-                print('Categoria alterada.')
+                print('Categoria alterada com sucesso.')
+                
+                estoque = DaoEstoque.ler()
+                estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, novacategoria), x.quantidade)
+                      if(x.produto.categoria == antigacategoria) else(x), estoque))
+                with open('estoque.txt', 'w') as arq:
+                    for i in x:
+                        arq.writelines(i.produto.nome + '|' +
+                                       i.produto.preco + '|' +
+                                       i.produto.categoria + '|' +
+                                       str(i.quantidade))
+                        arq.writelines('\n') 
             else:
                 print('A categoria para qual deseja alterar já existe.')
         else: 
