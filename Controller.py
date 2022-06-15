@@ -312,7 +312,7 @@ class ControllerClientes:
         if len(verif_nome) > 0:
             x = list(map(lambda x: Pessoa(novonome, novotelefone, novocpf, novoemail, novoendereco) if(x.nome == nomealterar) else(x), x))
         else:
-            print("O cliente alterar não existe.")
+            print("O cliente que deseja alterar não existe.")
 
         with open("clientes.txt", "w") as arq:
             for i in x:
@@ -359,5 +359,75 @@ class ControllerClientes:
                   f"Email: {i.email}\n"
                   f"Cpf: {i.cpf}" )
     
-    
-# a = ControllerVenda()
+class ControllerFuncionarios:
+    def cadastrar_funcionario(self, clt, nome, telefone, cpf, email, endereco):
+        x = Daofuncionario.ler()
+
+        verif_cpf = list(filter(lambda x: x.cpf == cpf, x))
+        #verif_clt = list(filter(lambda x: x.clt == clt, x)) # pensar no uso
+        if len(verif_cpf) > 0:
+            print("Cpf de funcionário já cadastrado.")
+        else:
+            if len(cpf) == 11 and len(telefone) >= 10 and len(telefone) <= 11:
+                Daofuncionario.salvar(Funcionario(clt, nome, telefone, cpf, email, endereco))
+                print("Funcionário cadastrado com sucesso.")
+            else: 
+                print('Digite um cpf ou telefone válido.')
+
+    def alterar_funcionario(self, nomealterar, novoclt, novonome, novotelefone, novocpf, novoemail, novoendereco):
+        x = Daofuncionario.ler()
+
+        verif_nome = list(filter(lambda x: x.nome == nomealterar, x))
+        if len(verif_nome) > 0:
+            x = list(map(lambda x: Funcionario(novoclt, novonome, novotelefone, novocpf, novoemail, novoendereco) if(x.nome == nomealterar) else(x), x))
+        else:
+            print("O funcionário que deseja alterar não existe.")
+
+        with open("funcionarios.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.clt + '|' +
+                               i.nome + '|' +
+                               i.telefone + '|' +
+                               i.cpf + '|' +
+                               i.email + '|' +
+                               i.endereco)
+                arq.writelines('\n')
+            print("Funcionário alterado com sucesso.")
+
+    def remover_funcionario(self, nome):
+        x = Daofuncionario.ler()
+        verif_nome = list(filter(lambda x: x.nome == nome, x))
+        if len(verif_nome) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print("Funcionário que deseja remover não existe.")
+            return None
+        
+        with open("funcionarios.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.clt + '|' + 
+                               i.nome + '|' +
+                               i.telefone + '|' +
+                               i.cpf + '|' +
+                               i.email + '|' +
+                               i.endereco)
+                arq.writelines('\n')
+            print("Funcionário removido com sucesso.")
+
+    def mostrar_funcionarios(self):
+        funcio = Daofuncionario.ler()
+        if len(funcio) == 0:
+            print("Lista de Funcionários vazias.")
+        
+        for i in funcio:
+            print(f"=== Funcionario ===")
+            print(f"Nome: {i.nome}\n"
+                  f"Clt: {i.clt}\n"
+                  f"Telefone: {i.telefone}\n"
+                  f"Endereço: {i.endereco}\n"
+                  f"Email: {i.email}\n"
+                  f"Cpf: {i.cpf}" )
+        
