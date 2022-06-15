@@ -291,5 +291,21 @@ class ControlleFornecedor:
                   f"Telefone: {i.telefone}\n"
                   f"Cnpj: {i.cnpj}" )
 
+class ControllerClientes:
+    def cadastrar_cliente(self, nome, telefone, cpf, email, endereco):
+        x = DaoPessoa.ler()
+
+        verif_cpf = list(filter(lambda x: x.cpf == cpf, x))
+        if len(verif_cpf) > 0:
+            print("Cpf já existente.")
+        else:
+            if len(cpf) == 11 and len(telefone) >= 10 and len(telefone) <= 11:
+                DaoPessoa.salvar(Pessoa(nome, telefone, cpf, email, endereco))
+                print("Cliente cadastrado com sucesso.")
+            else: 
+                print('Digite um cpf ou telefone válido.')
+        
+    
+
 
 # a = ControllerVenda()
