@@ -346,5 +346,18 @@ class ControllerClientes:
                 arq.writelines('\n')
             print("Cliente removido com sucesso.")
         
+    def mostrar_clientes(self):
+        clien = DaoFornecedor.ler()
+        if len(clien) == 0:
+            print("Lista de clientes vazias.")
         
+        for i in clien:
+            print(f"=== Cliente ===")
+            print(f"Nome: {i.nome}\n"
+                  f"Telefone: {i.telefone}\n"
+                  f"Endereço: {i.endereco}\n"
+                  f"Email: {i.email}\n"
+                  f"Cpf: {i.cpf}" )
+    
+    
 # a = ControllerVenda()
