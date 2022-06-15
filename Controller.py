@@ -237,8 +237,26 @@ class ControlleFornecedor:
                 DaoFornecedor.salvar(Fornecedor(nome, cnpj, telefone, categoria))
     
     def alterar_fornecedor(self, nomealterar, novonome, novocnpj, novotelefone, novacategoria):
+        x = DaoFornecedor.ler()
         
+        est = list(filter(lambda x: x.nome == nomealterar, x))
+        if len(est) > 0:
+            est = list(filter(lambda x: x.cnpj == novocnpj, x))
+            if len(est) == 0:
+                x = list(map(lambda x: Fornecedor(novonome, novocnpj, novotelefone, novacategoria) if(x.nome == nomealterar) else(x), x))
+            else:
+                print("Cnpj já existe.")
+        else:
+            print("O fornecedor que deseja alterar não existe.")
 
-
-
+        with open("fornecedores.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.nome + '|' +
+                               i.cnpj + '|' +
+                               i.telefone + '|' +
+                               str(i.categoria) )
+                arq.writelines('\n')
+            print("Fornecedor alterado com sucesso.")
+        
+    
 # a = ControllerVenda()
