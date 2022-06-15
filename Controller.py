@@ -324,5 +324,27 @@ class ControllerClientes:
                 arq.writelines('\n')
             print("Cliente alterado com sucesso.")
     
-    
+    def remover_cliente(self, nome):
+        x = DaoPessoa.ler()
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print("Cliente que deseja remover nao existe.")
+            return None
+        
+        with open("fornecedores.txt", "w") as arq:
+            for i in x:
+                arq.writelines(i.nome + '|' +
+                               i.telefone + '|' +
+                               i.cpf + '|' +
+                               i.email + '|' +
+                               i.endereco)
+                arq.writelines('\n')
+            print("Cliente removido com sucesso.")
+        
+        
 # a = ControllerVenda()
