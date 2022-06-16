@@ -1,4 +1,3 @@
-from sqlalchemy import PrimaryKeyConstraint
 from Models import *
 from DAO import *
 
@@ -245,7 +244,7 @@ class ControllerVenda:
             total += int(i.itens_vendidos.preco) * int(i.quantidade_vendida)
         print(f"total vendido: {total}")
 
-class ControlleFornecedor:
+class ControllerFornecedor:
     def cadastrar_fornecedor(self, nome, cnpj, telefone, categoria):
         x = DaoFornecedor.ler()
         listaCnpj = list(filter(lambda x: x.cnpj == cnpj, x))
